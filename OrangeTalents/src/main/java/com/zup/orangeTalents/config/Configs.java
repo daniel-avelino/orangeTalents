@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.entities.User;
+import com.zup.orangeTalents.services.FeignService;
 import com.zup.orangeTalents.services.UserService;
 
 @Configuration
@@ -15,10 +17,15 @@ public class Configs implements CommandLineRunner {
 	@Autowired
 	private UserService service;
 
+	@Autowired
+	private FeignService feign;
+
 	@Override
 	public void run(String... args) throws Exception {
 		User user = new User(null, "teste", "teste@teste", "123123", Calendar.getInstance());
 		service.insertUser(user);
+
+	//	Car car = new Car(null, "Acura", "Integra GS 1.8", "1992 Gasolina", null, user);
 	}
 
 }

@@ -9,8 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 @Entity
 @Table(name = "tb_car")
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 public class Car implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,8 +27,10 @@ public class Car implements Serializable {
 	private String marca;
 	private String modelo;
 	private String ano;
-	private Double valor;
 
+	private String valor;
+
+	@JsonIgnore
 	@ManyToOne
 	private User user;
 
@@ -36,7 +43,7 @@ public class Car implements Serializable {
 		this.ano = ano;
 	}
 
-	public Car(Long id, String marca, String modelo, String ano, Double valor, User user) {
+	public Car(Long id, String marca, String modelo, String ano, String valor, User user) {
 		this.id = id;
 		this.marca = marca;
 		this.modelo = modelo;
@@ -69,12 +76,20 @@ public class Car implements Serializable {
 		this.ano = ano;
 	}
 
-	public Double getValor() {
+	public String getValor() {
 		return valor;
 	}
 
-	public void setValor(Double valor) {
+	public void setValor(String valor) {
 		this.valor = valor;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

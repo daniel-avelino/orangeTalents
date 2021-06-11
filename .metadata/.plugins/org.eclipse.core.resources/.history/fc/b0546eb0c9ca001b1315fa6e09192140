@@ -1,0 +1,39 @@
+package com.zup.orangeTalents.resources;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.zup.orangeTalents.DTO.UserDTO;
+import com.zup.orangeTalents.entities.User;
+import com.zup.orangeTalents.services.UserService;
+
+@RestController
+@RequestMapping(path = "/user")
+public class UserController {
+
+	@Autowired
+	private UserService service;
+
+	@PostMapping
+	public ResponseEntity<?> insertUser(@RequestBody User user) {
+		service.insertUser(user);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@GetMapping
+	public ResponseEntity<?> findUserByEmail(@RequestParam("email") String email) {
+		try {
+			UserDTO user = service.findUserbyEmail(email);
+			return ResponseEntity.ok().body(user);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+		}
+	}
+}

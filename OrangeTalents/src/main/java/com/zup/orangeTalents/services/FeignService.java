@@ -2,18 +2,25 @@ package com.zup.orangeTalents.services;
 
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.entities.Fipe;
+import com.zup.orangeTalents.entities.User;
 import com.zup.orangeTalents.feign.FipeFeign;
+import com.zup.orangeTalents.repositories.CarRepository;
 
 @Service
 public class FeignService {
 
+	@Autowired
 	private FipeFeign fipe;
 
-	public Car findCarPrice(Car car) {
+	@Autowired
+	private CarRepository repository;
+
+	public Car findCarPrice(Car car, User user) {
 		Fipe marca = fipe.getMarcas().stream().filter(x -> x.getNome().equalsIgnoreCase(car.getMarca()))
 				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
 					return list.get(0);
@@ -30,9 +37,12 @@ public class FeignService {
 				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
 					return list.get(0);
 				}));
-		Double valor = fipe.getCars(marca.getCodigo(), modelo.getCodigo(), ano.getCodigo()).getValor();
-		car.setValor(valor);
+		String price = fipe.getCars(marca.getCodigo(), modelo.getCodigo(), ano.getCodigo()).getValor();
+		car.setValor(price);
+		car.setUser(user);
+		repository.save(car);
 
 		return car;
 	}
+
 }

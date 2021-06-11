@@ -1,7 +1,11 @@
 package com.zup.orangeTalents.DTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import com.zup.orangeTalents.entities.Car;
 
 public class UserDTO implements Serializable {
 
@@ -17,15 +21,18 @@ public class UserDTO implements Serializable {
 
 	private Calendar birthday;
 
+	private List<Car> cars = new ArrayList<>();
+
 	public UserDTO() {
 	}
 
-	public UserDTO(Long id, String name, String email, String cpf, Calendar birthday) {
+	public UserDTO(Long id, String name, String email, String cpf, Calendar birthday, List<Car>cars) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cpf = cpf;
 		this.birthday = birthday;
+		this.cars = cars;
 	}
 
 	public Long getId() {
@@ -66,6 +73,11 @@ public class UserDTO implements Serializable {
 
 	public void setBirthday(Calendar birthday) {
 		this.birthday = birthday;
+	}
+
+
+	public List<Car> getCars() {
+		return cars;
 	}
 
 }
