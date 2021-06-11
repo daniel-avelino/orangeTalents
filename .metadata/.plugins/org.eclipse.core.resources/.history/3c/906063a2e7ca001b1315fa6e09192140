@@ -1,7 +1,6 @@
 package com.zup.orangeTalents.entities;
 
 import java.io.Serializable;
-import java.time.DayOfWeek;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,10 +29,6 @@ public class Car implements Serializable {
 	private String ano;
 
 	private String valor;
-
-	private DayOfWeek diaRodizio;
-
-	private Boolean rodizioAtivo;
 
 	@JsonIgnore
 	@ManyToOne
@@ -95,22 +90,6 @@ public class Car implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public DayOfWeek getDiaRodizio() {
-		return diaRodizio;
-	}
-
-	public void setDiaRodizio(DayOfWeek diaRodizio) {
-		this.diaRodizio = diaRodizio;
-	}
-
-	public Boolean getRodizioAtivo() {
-		return rodizioAtivo;
-	}
-
-	public void setRodizioAtivo(Boolean rodizioAtivo) {
-		this.rodizioAtivo = rodizioAtivo;
 	}
 
 }

@@ -42,8 +42,8 @@ public class FeignService {
 		String price = fipe.getCars(marca.getCodigo(), modelo.getCodigo(), ano.getCodigo()).getValor();
 		car.setValor(price);
 		car.setUser(user);
-		// car.setDiaRodizio(setRodizio(car.getAno()));
-		car.setDiaRodizio(DayOfWeek.FRIDAY);
+		System.out.println("ANO CARRO: " + car.getAno());
+		car.setDiaRodizio(setRodizio(car.getAno()));
 		car.setRodizioAtivo(rodizioAtivo(car.getDiaRodizio()));
 		repository.save(car);
 
@@ -51,39 +51,22 @@ public class FeignService {
 	}
 
 	public DayOfWeek setRodizio(String ano) {
-		int lastDigit = Character.getNumericValue(ano.charAt(3));
+		char lastDigit = ano.charAt(2);
+		System.out.println("ANO: " + ano);
 		DayOfWeek day = null;
 		switch (lastDigit) {
-		case 0:
-		case 1:
+		case 0 | 1:
 			day = DayOfWeek.MONDAY;
-			System.out.println("entrou 1: " + lastDigit);
 			break;
-		case 2:
-		case 3:
+		case 2 | 3:
 			day = DayOfWeek.TUESDAY;
-			break;
-		case 4:
-		case 5:
-			day = DayOfWeek.WEDNESDAY;
-			break;
-		case 6:
-		case 7:
-			day = DayOfWeek.THURSDAY;
-			break;
-		case 8:
-		case 9:
-			day = DayOfWeek.FRIDAY;
 			break;
 		}
 		return day;
 	}
 
 	public boolean rodizioAtivo(DayOfWeek day) {
-		System.out.println("DAY: " + day);
-
-		System.out.println("TODAY: " + LocalDate.now().getDayOfWeek());
-		if (day == LocalDate.now().getDayOfWeek()) {
+		if (day.equals(LocalDate.now().getDayOfWeek())) {
 			return true;
 		} else {
 			return false;
