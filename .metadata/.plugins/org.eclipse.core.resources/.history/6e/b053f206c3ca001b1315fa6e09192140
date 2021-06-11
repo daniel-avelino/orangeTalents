@@ -1,0 +1,5 @@
+package com.zup.orangeTalents.resources;
+
+public class UserController {
+
+}

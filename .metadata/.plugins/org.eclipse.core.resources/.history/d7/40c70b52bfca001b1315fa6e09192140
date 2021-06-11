@@ -1,0 +1,8 @@
+package com.zup.orangeTalents.feign;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(url = "https://parallelum.com.br/fipe/api/v1/carros", name = "fipe")
+public interface FipeFeign {
+
+}

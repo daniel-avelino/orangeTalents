@@ -1,0 +1,5 @@
+package com.zup.orangeTalents.feign;
+
+public interface FipeFeign {
+
+}
