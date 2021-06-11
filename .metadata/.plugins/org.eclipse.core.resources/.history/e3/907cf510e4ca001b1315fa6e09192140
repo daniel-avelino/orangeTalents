@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 
 import com.zup.orangeTalents.DTO.UserDTO;
@@ -21,8 +22,10 @@ public class UserService {
 	private FeignService feign;
 
 	public void insertUser(UserDTO dto) {
-		User user = new User(null, dto.getName(), dto.getEmail(), dto.getCpf(),
-				LocalDate.parse(dto.getBirthday(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		System.out.println("ORIGINAL: "+ dto.getBirthday());
+		System.out.println("PARSED: "+ LocalDate.parse(dto.getBirthday()));
+		User user = new User(null, dto.getName(), dto.getEmail(), dto.getCpf(), LocalDate.parse(dto.getBirthday()));
+		System.out.println("USER: "+user.getBirthday());
 		repository.saveAndFlush(user);
 	}
 

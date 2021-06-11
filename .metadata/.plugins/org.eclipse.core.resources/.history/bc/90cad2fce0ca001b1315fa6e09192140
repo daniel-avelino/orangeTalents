@@ -1,0 +1,8 @@
+package com.zup.orangeTalents.factory;
+
+import com.zup.orangeTalents.DTO.UserDTO;
+import com.zup.orangeTalents.entities.User;
+
+public class UserFactory {
+
+}

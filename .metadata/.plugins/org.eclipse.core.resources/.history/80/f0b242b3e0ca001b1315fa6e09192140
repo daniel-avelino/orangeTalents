@@ -1,6 +1,5 @@
 package com.zup.orangeTalents.services;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,7 @@ public class UserService {
 	@Autowired
 	private FeignService feign;
 
-	public void insertUser(UserDTO dto) {
-		User user = new User(null, dto.getName(), dto.getEmail(), dto.getCpf(),
-				LocalDate.parse(dto.getBirthday(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+	public void insertUser(User user) {
 		repository.saveAndFlush(user);
 	}
 

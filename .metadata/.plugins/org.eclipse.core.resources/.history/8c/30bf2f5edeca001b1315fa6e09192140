@@ -33,7 +33,7 @@ public class FeignService {
 				}));
 
 		Fipe ano = fipe.getModelsAnos(marca.getCodigo(), modelo.getCodigo()).stream()
-				.filter(x -> x.getNome().contains(car.getAno()))
+				.filter(x -> x.getNome().equalsIgnoreCase(car.getAno()))
 				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
 					return list.get(0);
 				}));

@@ -1,11 +1,16 @@
 package com.zup.orangeTalents.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.zup.orangeTalents.services.UserService;
 
 @Configuration
 public class Configs implements CommandLineRunner {
+
+	@Autowired
+	private UserService service;
 
 	@Override
 	public void run(String... args) throws Exception {

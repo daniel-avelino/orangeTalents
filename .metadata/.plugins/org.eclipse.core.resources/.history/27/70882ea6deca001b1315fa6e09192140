@@ -1,8 +1,8 @@
 package com.zup.orangeTalents.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ public class User implements Serializable {
 	@Column(unique = true)
 	private String cpf;
 
-	private LocalDate birthday;
+	private Calendar birthday;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Car> cars = new ArrayList<>();
@@ -39,7 +39,7 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(Long id, String name, String email, String cpf, LocalDate birthday) {
+	public User(Long id, String name, String email, String cpf, Calendar birthday) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -79,11 +79,11 @@ public class User implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public LocalDate getBirthday() {
+	public Calendar getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(LocalDate birthday) {
+	public void setBirthday(Calendar birthday) {
 		this.birthday = birthday;
 	}
 

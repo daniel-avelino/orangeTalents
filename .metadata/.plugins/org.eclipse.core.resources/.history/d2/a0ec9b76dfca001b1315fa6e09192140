@@ -1,6 +1,7 @@
 package com.zup.orangeTalents.DTO;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +19,14 @@ public class UserDTO implements Serializable {
 
 	private String cpf;
 
-	private String birthday;
+	private LocalDate birthday;
 
 	private List<Car> cars = new ArrayList<>();
 
 	public UserDTO() {
 	}
 
-	public UserDTO(Long id, String name, String email, String cpf, String birthday, List<Car>cars) {
+	public UserDTO(Long id, String name, String email, String cpf, LocalDate birthday, List<Car>cars) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -66,23 +67,17 @@ public class UserDTO implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public String getBirthday() {
+	public LocalDate getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
 
 
 	public List<Car> getCars() {
 		return cars;
-	}
-
-	@Override
-	public String toString() {
-		return "UserDTO [id=" + id + ", name=" + name + ", email=" + email + ", cpf=" + cpf + ", birthday=" + birthday
-				+ ", cars=" + cars + "]";
 	}
 
 }
