@@ -1,19 +1,15 @@
 package com.zup.orangeTalents.services;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zup.orangeTalents.DTO.UserDTO;
 import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.entities.User;
 import com.zup.orangeTalents.repositories.UserRepository;
 import com.zup.orangeTalents.services.exceptions.ConstraintException;
-import com.zup.orangeTalents.services.exceptions.DateException;
 import com.zup.orangeTalents.services.exceptions.NotFoundException;
 
 @Service
@@ -23,29 +19,26 @@ public class UserService {
 	private UserRepository repository;
 
 	@Autowired
-	private FeignService feign;
+	private CarService feign;
 
 	public void insertUser(UserDTO dto) {
 		try {
-			User user = new User(null, dto.getName(), dto.getEmail(), dto.getCpf(),
-					LocalDate.parse(dto.getBirthday(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			User user = new User(dto);
 			repository.save(user);
 		} catch (DataIntegrityViolationException e) {
 			throw new ConstraintException("Usuário duplicado");
-		} catch (DateTimeParseException e) {
-			throw new DateException("Formato de data inválido");
 		}
-
 	}
 
+	@Transactional(readOnly = true)
 	public UserDTO findUserbyEmail(String email) {
 		User user = repository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
-		UserDTO dto = new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getCpf(),
-				user.getBirthday().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), user.getCars());
+		UserDTO dto = new UserDTO(user);
 		return dto;
 
 	}
 
+	@Transactional
 	public void newCar(Car car, String email) {
 		User user = repository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
 		user.insertCarUser(feign.findCarPrice(car, user));

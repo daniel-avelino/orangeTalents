@@ -7,12 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.zup.orangeTalents.services.exceptions.AnoException;
 import com.zup.orangeTalents.services.exceptions.ConstraintException;
-import com.zup.orangeTalents.services.exceptions.DateException;
 import com.zup.orangeTalents.services.exceptions.MarcasException;
 import com.zup.orangeTalents.services.exceptions.ModelosException;
 import com.zup.orangeTalents.services.exceptions.NotFoundException;
@@ -48,7 +49,7 @@ public class ExceptionsHandler {
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
-		err.setError("Modelo não encontrada, revise o nome inserido");
+		err.setError("Modelo não encontrado, revise o nome inserido");
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -59,12 +60,13 @@ public class ExceptionsHandler {
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
-		err.setError("Ano não encontrada, revise o nome inserido");
+		err.setError("Ano não encontrado, revise o nome inserido");
 		return ResponseEntity.status(status).body(err);
 	}
 
-	@ExceptionHandler(DateException.class)
-	public ResponseEntity<StandardError> dateException(DateException e, HttpServletRequest request) throws IOException {
+	@ExceptionHandler(HttpMessageConversionException.class)
+	public ResponseEntity<StandardError> dateException(HttpMessageConversionException e, HttpServletRequest request)
+			throws IOException {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -81,6 +83,16 @@ public class ExceptionsHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Usuário já cadastrado.");
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setError("Validation exception");
 		return ResponseEntity.status(status).body(err);
 	}
 }

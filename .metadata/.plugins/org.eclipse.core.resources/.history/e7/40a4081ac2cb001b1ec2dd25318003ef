@@ -1,0 +1,20 @@
+package com.zup.orangeTalents.entities;
+
+import java.time.DayOfWeek;
+
+public enum Dia {
+	SEGUNDA("SEGUNDA-FEIRA"), 
+	TERÇA("SEGUNDA-FEIRA"), 
+	QUARTA_FEIRA("SEGUNDA-FEIRA"),
+	THURSDAY("SEGUNDA-FEIRA"),
+	FRIDAY("SEGUNDA-FEIRA"), 
+	SATURDAY("SEGUNDA-FEIRA"), 
+	SUNDAY("SEGUNDA-FEIRA");
+
+	Dia(String string) {
+	}
+
+	private static final DayOfWeek[] Dia = DayOfWeek.values();
+	
+	
+}

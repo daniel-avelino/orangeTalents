@@ -1,0 +1,78 @@
+package com.zup.orangeTalents.DTO;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.zup.orangeTalents.entities.Car;
+
+public class UserDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+
+	private String name;
+
+	private String email;
+
+	private String cpf;
+
+	private String birthday;
+
+	private List<Car> cars = new ArrayList<>();
+
+	public UserDTO() {
+	}
+
+	public UserDTO(String name, String email, String cpf, String birthday, List<Car>cars) {
+		this.name = name;
+		this.email = email;
+		this.cpf = cpf;
+		this.birthday = birthday;
+		this.cars = cars;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+
+	public List<Car> getCars() {
+		return cars;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [ name=" + name + ", email=" + email + ", cpf=" + cpf + ", birthday=" + birthday
+				+ ", cars=" + cars + "]";
+	}
+
+}

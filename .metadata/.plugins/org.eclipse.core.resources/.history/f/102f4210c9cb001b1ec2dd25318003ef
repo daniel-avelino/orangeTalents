@@ -1,0 +1,48 @@
+package com.zup.orangeTalents.services.exceptions;
+
+
+import java.time.Instant;
+
+import com.zup.orangeTalents.resources.exceptions.StandardError;
+
+public class ValidationException extends StandardError {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public Instant getTimestamp() {
+		// TODO Auto-generated method stub
+		return super.getTimestamp();
+	}
+
+	@Override
+	public void setTimestamp(Instant timestamp) {
+		// TODO Auto-generated method stub
+		super.setTimestamp(timestamp);
+	}
+
+	@Override
+	public Integer getStatus() {
+		// TODO Auto-generated method stub
+		return super.getStatus();
+	}
+
+	@Override
+	public void setStatus(Integer status) {
+		// TODO Auto-generated method stub
+		super.setStatus(status);
+	}
+
+	@Override
+	public String getError() {
+		// TODO Auto-generated method stub
+		return super.getError();
+	}
+
+	@Override
+	public void setError(String error) {
+		// TODO Auto-generated method stub
+		super.setError(error);
+	}
+
+	
+}

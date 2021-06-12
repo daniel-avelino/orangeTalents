@@ -1,0 +1,19 @@
+package com.zup.orangeTalents.entities;
+
+import java.time.DayOfWeek;
+
+public enum Dia {
+	SEGUNDA(0), 
+	TERÇA(1), 
+	QUARTA_FEIRA(2),
+	THURSDAY(3),
+	FRIDAY(4);
+	
+
+	Dia(int value) {
+	}
+
+	private static final DayOfWeek[] Dia = DayOfWeek.values();
+	
+	
+}

@@ -1,0 +1,10 @@
+package com.zup.orangeTalents.entities;
+
+public enum DayOfWeeks extends DayofWeek.class{
+
+	SEGUNDA-FEIRA("segunda"),
+	TERÇA-FEIRA(),
+	QUARTA-FEIRA(),
+	QUINTA-FEIRA(),
+	SEXTA-FEIRA();
+}

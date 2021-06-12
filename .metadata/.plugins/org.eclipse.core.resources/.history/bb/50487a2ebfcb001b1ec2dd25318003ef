@@ -1,0 +1,5 @@
+package com.zup.orangeTalents.entities;
+
+public enum DayOfWeek {
+
+}

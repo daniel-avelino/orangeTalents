@@ -1,15 +1,12 @@
 package com.zup.orangeTalents.entities;
 
 import java.io.Serializable;
-import java.time.DayOfWeek;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -31,7 +28,7 @@ public class Car implements Serializable {
 
 	private String valor;
 
-	private DayOfWeek diaRodizio;
+	private Dia diaRodizio;
 
 	private Boolean rodizioAtivo;
 
@@ -97,11 +94,11 @@ public class Car implements Serializable {
 		this.user = user;
 	}
 
-	public DayOfWeek getDiaRodizio() {
+	public Dia getDiaRodizio() {
 		return diaRodizio;
 	}
 
-	public void setDiaRodizio(DayOfWeek diaRodizio) {
+	public void setDiaRodizio(Dia diaRodizio) {
 		this.diaRodizio = diaRodizio;
 	}
 

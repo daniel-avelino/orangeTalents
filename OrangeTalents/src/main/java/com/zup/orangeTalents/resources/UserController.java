@@ -1,5 +1,7 @@
 package com.zup.orangeTalents.resources;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,7 @@ public class UserController {
 	private UserService service;
 
 	@PostMapping
-	public ResponseEntity<?> insertUser(@RequestBody UserDTO user) {
+	public ResponseEntity<?> insertUser(@Valid @RequestBody UserDTO user) {
 		service.insertUser(user);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
