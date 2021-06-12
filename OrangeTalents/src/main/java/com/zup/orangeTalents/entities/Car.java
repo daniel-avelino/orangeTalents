@@ -113,4 +113,12 @@ public class Car implements Serializable {
 		this.rodizioAtivo = rodizioAtivo;
 	}
 
+	@Override
+	public String toString() {
+		return "Car [id=" + id + ", marca=" + marca + ", modelo=" + modelo + ", ano=" + ano + ", valor=" + valor
+				+ ", diaRodizio=" + diaRodizio + ", rodizioAtivo=" + rodizioAtivo + ", user=" + user + "]";
+	}
+	
+	
+
 }

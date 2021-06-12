@@ -12,6 +12,9 @@ import com.zup.orangeTalents.entities.Fipe;
 import com.zup.orangeTalents.entities.User;
 import com.zup.orangeTalents.feign.FipeFeign;
 import com.zup.orangeTalents.repositories.CarRepository;
+import com.zup.orangeTalents.services.exceptions.AnoException;
+import com.zup.orangeTalents.services.exceptions.MarcasException;
+import com.zup.orangeTalents.services.exceptions.ModelosException;
 
 @Service
 public class FeignService {
@@ -23,31 +26,41 @@ public class FeignService {
 	private CarRepository repository;
 
 	public Car findCarPrice(Car car, User user) {
-		Fipe marca = fipe.getMarcas().stream().filter(x -> x.getNome().equalsIgnoreCase(car.getMarca()))
+		Fipe marca = fipe.getMarcas().stream()
+				.filter(x -> x.getNome().toLowerCase().contains(car.getMarca().toLowerCase()))
 				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
+					if (list.size() != 1) {
+						throw new MarcasException("Mais de um elemento retornado");
+					}
 					return list.get(0);
 				}));
 
 		Fipe modelo = fipe.getModelos(marca.getCodigo()).getModelos().stream()
-				.filter(x -> x.getNome().equalsIgnoreCase(car.getModelo()))
+				.filter(x -> x.getNome().toLowerCase().contains(car.getModelo().toLowerCase()))
 				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
+					if (list.size() != 1) {
+						throw new ModelosException("Mais de um elemento retornado");
+					}
 					return list.get(0);
 				}));
 
 		Fipe ano = fipe.getModelsAnos(marca.getCodigo(), modelo.getCodigo()).stream()
 				.filter(x -> x.getNome().contains(car.getAno()))
 				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
+					if (list.size() != 1) {
+						throw new AnoException("Mais de um elemento retornado");
+					}
 					return list.get(0);
 				}));
-		String price = fipe.getCars(marca.getCodigo(), modelo.getCodigo(), ano.getCodigo()).getValor();
-		car.setValor(price);
+
+		car.setValor(fipe.getCars(marca.getCodigo(), modelo.getCodigo(), ano.getCodigo()).getValor());
 		car.setUser(user);
-		// car.setDiaRodizio(setRodizio(car.getAno()));
-		car.setDiaRodizio(DayOfWeek.FRIDAY);
+		car.setDiaRodizio(setRodizio(car.getAno()));
 		car.setRodizioAtivo(rodizioAtivo(car.getDiaRodizio()));
 		repository.save(car);
 
 		return car;
+
 	}
 
 	public DayOfWeek setRodizio(String ano) {
@@ -57,7 +70,6 @@ public class FeignService {
 		case 0:
 		case 1:
 			day = DayOfWeek.MONDAY;
-			System.out.println("entrou 1: " + lastDigit);
 			break;
 		case 2:
 		case 3:
@@ -80,9 +92,6 @@ public class FeignService {
 	}
 
 	public boolean rodizioAtivo(DayOfWeek day) {
-		System.out.println("DAY: " + day);
-
-		System.out.println("TODAY: " + LocalDate.now().getDayOfWeek());
 		if (day == LocalDate.now().getDayOfWeek()) {
 			return true;
 		} else {

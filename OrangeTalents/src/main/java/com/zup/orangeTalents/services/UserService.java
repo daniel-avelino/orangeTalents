@@ -2,14 +2,19 @@ package com.zup.orangeTalents.services;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.zup.orangeTalents.DTO.UserDTO;
 import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.entities.User;
 import com.zup.orangeTalents.repositories.UserRepository;
+import com.zup.orangeTalents.services.exceptions.ConstraintException;
+import com.zup.orangeTalents.services.exceptions.DateException;
+import com.zup.orangeTalents.services.exceptions.NotFoundException;
 
 @Service
 public class UserService {
@@ -21,26 +26,30 @@ public class UserService {
 	private FeignService feign;
 
 	public void insertUser(UserDTO dto) {
-		User user = new User(null, dto.getName(), dto.getEmail(), dto.getCpf(),
-				LocalDate.parse(dto.getBirthday(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		repository.saveAndFlush(user);
+		try {
+			User user = new User(null, dto.getName(), dto.getEmail(), dto.getCpf(),
+					LocalDate.parse(dto.getBirthday(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			repository.save(user);
+		} catch (DataIntegrityViolationException e) {
+			throw new ConstraintException("Usuário duplicado");
+		} catch (DateTimeParseException e) {
+			throw new DateException("Formato de data inválido");
+		}
+
 	}
 
-	public UserDTO findUserbyEmail(String email) throws Exception {
-		try {
-			User user = repository.findByEmail(email).get();
-			UserDTO dto = new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getCpf(),
-					user.getBirthday().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), user.getCars());
-			return dto;
-		} catch (Exception e) {
-			throw new Exception("problems");
-		}
+	public UserDTO findUserbyEmail(String email) {
+		User user = repository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
+		UserDTO dto = new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getCpf(),
+				user.getBirthday().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), user.getCars());
+		return dto;
+
 	}
 
 	public void newCar(Car car, String email) {
-		User user = repository.findByEmail(email).get();
+		User user = repository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
 		user.insertCarUser(feign.findCarPrice(car, user));
-		repository.saveAndFlush(user);
+		repository.save(user);
 	}
 
 }

@@ -29,18 +29,14 @@ public class UserController {
 	}
 
 	@PostMapping(path = "/{email}")
-	public ResponseEntity<?> insertCarUser(@PathVariable String email, @RequestBody Car car) throws Exception {
+	public ResponseEntity<?> insertCarUser(@PathVariable String email, @RequestBody Car car) {
 		service.newCar(car, email);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@GetMapping
 	public ResponseEntity<?> findUserByEmail(@RequestParam("email") String email) {
-		try {
-			UserDTO user = service.findUserbyEmail(email);
-			return ResponseEntity.ok().body(user);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-		}
+		UserDTO user = service.findUserbyEmail(email);
+		return ResponseEntity.ok().body(user);
 	}
 }

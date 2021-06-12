@@ -34,4 +34,11 @@ public class Fipe implements Serializable {
 		this.codigo = codigo;
 	}
 
+	@Override
+	public String toString() {
+		return "Fipe [nome=" + nome + ", codigo=" + codigo + "]";
+	}
+
+	
+	
 }
