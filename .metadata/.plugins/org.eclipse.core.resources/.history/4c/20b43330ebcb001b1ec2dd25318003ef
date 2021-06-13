@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
-import org.springframework.lang.NonNull;
-
 import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.entities.User;
 
@@ -23,7 +21,6 @@ public class UserDTO implements Serializable {
 	@NotBlank(message = "Insira um nome.")
 	private String name;
 
-	@NotBlank
 	@Email(message = "E-mail inválido.")
 	private String email;
 
@@ -31,7 +28,6 @@ public class UserDTO implements Serializable {
 	@Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}",message = "CPF em formato inválido 000.000.000-00")
 	private String cpf;
 
-	@NonNull
 	@Past(message = "Data de nascimento inválida, é preciso ser maior que a data de hoje.")
 	private LocalDate birthday;
 

@@ -1,0 +1,30 @@
+package com.zup.orangeTalents.resources.exceptions;
+
+import java.io.Serializable;
+
+public class StandardError implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private Integer status;
+	private String error;
+	
+	public StandardError() {
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
+}

@@ -1,12 +1,14 @@
 package com.zup.orangeTalents.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -32,8 +34,7 @@ public class Car implements Serializable {
 
 	private Boolean rodizioAtivo;
 
-	@JsonIgnore
-	@ManyToOne
+	@ManyToMany
 	private User user;
 
 	public Car() {
@@ -109,5 +110,13 @@ public class Car implements Serializable {
 	public void setRodizioAtivo(Boolean rodizioAtivo) {
 		this.rodizioAtivo = rodizioAtivo;
 	}
+
+	@Override
+	public String toString() {
+		return "Car [id=" + id + ", marca=" + marca + ", modelo=" + modelo + ", ano=" + ano + ", valor=" + valor
+				+ ", diaRodizio=" + diaRodizio + ", rodizioAtivo=" + rodizioAtivo + ", user=" + user + "]";
+	}
+	
+	
 
 }

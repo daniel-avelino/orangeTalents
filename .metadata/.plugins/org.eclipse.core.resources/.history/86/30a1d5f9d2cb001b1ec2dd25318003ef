@@ -35,6 +35,7 @@ public class UserService {
 		User user = repository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
 		UserDTO dto = new UserDTO(user);
 		return dto;
+
 	}
 
 	@Transactional
