@@ -56,7 +56,7 @@ public class ExceptionsHandler {
 	public ResponseEntity<String> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 		BindingResult result = e.getBindingResult();
 		List<FieldError> fieldErrors = result.getFieldErrors();
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
 				.body("Problemas com a validação: " + fieldErrors.get(0).getDefaultMessage());
 	}
 }
