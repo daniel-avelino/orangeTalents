@@ -9,4 +9,8 @@ public enum Dia {
 	
 	Dia(int value) {
 	}	
+	
+	public int getValue() {
+		return ordinal() + 1;
+	}
 }

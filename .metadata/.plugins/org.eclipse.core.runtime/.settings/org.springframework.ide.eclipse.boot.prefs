@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 org.springframework.ide.eclipse.boot.wizard.PopularityTracker.cloud-feign=1
 org.springframework.ide.eclipse.boot.wizard.PopularityTracker.data-jpa=2
 org.springframework.ide.eclipse.boot.wizard.PopularityTracker.h2=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.validation=1
 org.springframework.ide.eclipse.boot.wizard.PopularityTracker.web=1
 org.springframework.ide.eclipse.boot.wizard.PreferredSelections.artifactId=OrangeTalents
 org.springframework.ide.eclipse.boot.wizard.PreferredSelections.bootVersion=2.4.8-SNAPSHOT

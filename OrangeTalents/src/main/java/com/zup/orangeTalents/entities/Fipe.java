@@ -13,7 +13,6 @@ public class Fipe implements Serializable {
 	}
 
 	public Fipe(String nome, String codigo) {
-		super();
 		this.nome = nome;
 		this.codigo = codigo;
 	}

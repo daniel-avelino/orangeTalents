@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zup.orangeTalents.DTO.CarDTO;
 import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.entities.Dia;
 import com.zup.orangeTalents.entities.Fipe;
@@ -25,7 +26,9 @@ public class CarService {
 	@Autowired
 	private CarRepository repository;
 
-	public Car findCarPrice(Car car, User user) {
+	public Car findCarPrice(CarDTO newCar, User user) {
+		Car car = new Car(newCar);
+
 		Fipe marca = fipe.getMarcas().stream()
 				.filter(x -> x.getNome().toLowerCase().contains(car.getMarca().toLowerCase()))
 				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
@@ -58,12 +61,11 @@ public class CarService {
 		return car;
 
 	}
-	
+
 	public void setCarUser(Car car, User user, String marca, String modelo, String ano) {
 		car.setValor(fipe.getCars(marca, modelo, ano).getValor());
 		car.setUser(user);
 		car.setDiaRodizio(setRodizio(car.getAno()));
-		car.setRodizioAtivo(rodizioAtivo(car.getDiaRodizio()));
 		repository.save(car);
 	}
 
@@ -95,8 +97,13 @@ public class CarService {
 		return day;
 	}
 
+	public CarDTO rodizio(CarDTO car) {
+		car.setRodizioAtivo(rodizioAtivo(car.getDiaRodizio()));
+		return car;
+	}
+
 	public boolean rodizioAtivo(Dia day) {
-		if (day.ordinal() == LocalDate.now().getDayOfWeek().getValue()) {
+		if (day.getValue() == LocalDate.now().getDayOfWeek().getValue()) {
 			return true;
 		} else {
 			return false;

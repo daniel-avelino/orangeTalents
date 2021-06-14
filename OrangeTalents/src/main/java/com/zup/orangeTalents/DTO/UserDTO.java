@@ -3,8 +3,9 @@ package com.zup.orangeTalents.DTO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +14,6 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.lang.NonNull;
 
-import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.entities.User;
 
 public class UserDTO implements Serializable {
@@ -28,19 +28,19 @@ public class UserDTO implements Serializable {
 	private String email;
 
 	@NotBlank
-	@Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}",message = "CPF em formato inválido 000.000.000-00")
+	@Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}", message = "CPF em formato inválido 000.000.000-00")
 	private String cpf;
 
 	@NonNull
-	@Past(message = "Data de nascimento inválida, é preciso ser maior que a data de hoje.")
+	@Past(message = "Data de nascimento inválida, é preciso ser menor que a data de hoje.")
 	private LocalDate birthday;
 
-	private List<Car> cars = new ArrayList<>();
+	private Set<CarDTO> cars = new HashSet<>();
 
 	public UserDTO() {
 	}
 
-	public UserDTO(String name, String email, String cpf, String birthday, List<Car> cars) {
+	public UserDTO(String name, String email, String cpf, String birthday, Set<CarDTO> cars) {
 		this.name = name;
 		this.email = email;
 		this.cpf = cpf;
@@ -53,7 +53,7 @@ public class UserDTO implements Serializable {
 		email = user.getEmail();
 		cpf = user.getCpf();
 		birthday = user.getBirthday();
-		cars = user.getCars();
+		cars = user.getCars().stream().map(x -> new CarDTO(x)).collect(Collectors.toSet());
 	}
 
 	public String getName() {
@@ -88,7 +88,7 @@ public class UserDTO implements Serializable {
 		this.birthday = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 
-	public List<Car> getCars() {
+	public Set<CarDTO> getCars() {
 		return cars;
 	}
 

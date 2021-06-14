@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zup.orangeTalents.DTO.CarDTO;
 import com.zup.orangeTalents.DTO.UserDTO;
-import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.services.UserService;
 
 @RestController
@@ -31,7 +31,7 @@ public class UserController {
 	}
 
 	@PostMapping(path = "/{email}")
-	public ResponseEntity<?> insertCarUser(@PathVariable String email, @RequestBody Car car) {
+	public ResponseEntity<?> insertCarUser(@PathVariable String email, @RequestBody CarDTO car) {
 		service.newCar(car, email);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
