@@ -2,8 +2,6 @@ package com.zup.orangeTalents.DTO;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotBlank;
-
 import com.zup.orangeTalents.entities.Car;
 import com.zup.orangeTalents.entities.Dia;
 
@@ -11,11 +9,8 @@ public class CarDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message = "Insira uma marca.")
 	private String marca;
-	@NotBlank(message = "Insira um modelo.")
 	private String modelo;
-	@NotBlank(message = "Insira um ano.")
 	private String ano;
 
 	private String valor;

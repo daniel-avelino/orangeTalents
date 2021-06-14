@@ -59,6 +59,7 @@ public class CarService {
 		setCarUser(car, user, marca.getCodigo(), modelo.getCodigo(), ano.getCodigo());
 
 		return car;
+
 	}
 
 	public void setCarUser(Car car, User user, String marca, String modelo, String ano) {
@@ -96,7 +97,7 @@ public class CarService {
 		return day;
 	}
 
-	public CarDTO setRodizioAtivo(CarDTO car) {
+	public CarDTO rodizio(CarDTO car) {
 		car.setRodizioAtivo(rodizioAtivo(car.getDiaRodizio()));
 		return car;
 	}

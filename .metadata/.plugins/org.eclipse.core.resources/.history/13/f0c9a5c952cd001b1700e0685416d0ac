@@ -36,7 +36,7 @@ public class UserService {
 		User user = repository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
 		UserDTO dto = new UserDTO(user);
 		dto.getCars().forEach((CarDTO car) -> {
-			feign.setRodizioAtivo(car);
+			feign.rodizio(car);
 		});
 		return dto;
 	}

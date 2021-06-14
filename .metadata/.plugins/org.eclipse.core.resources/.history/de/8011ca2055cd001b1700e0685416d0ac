@@ -31,7 +31,7 @@ public class UserController {
 	}
 
 	@PostMapping(path = "/{email}")
-	public ResponseEntity<?> insertCarUser(@PathVariable String email, @Valid @RequestBody CarDTO car) {
+	public ResponseEntity<?> insertCarUser(@PathVariable String email, @RequestBody CarDTO car) {
 		service.newCar(car, email);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
